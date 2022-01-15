@@ -3,51 +3,23 @@ unsigned long prevTimeSwitch = 0;
 unsigned long prevTimeFade = 0;
 
 void fadeTest() {
-  static int r = 255;
-  static int g = 150;
-  static int b = 50;
-  static bool rUp = false;
-  static bool gUp = false;
-  static bool bUp = false;
-
-  if (r >= 255) {
-    rUp = false;
-  } else if (r <= 0) {
-    rUp = true;
-  }
-  if (g >= 255) {
-    gUp = false;
-  } else if (g <= 0) {
-    gUp = true;
-  }
-  if (g >= 255) {
-    gUp = false;
-  } else if (r <= 0) {
-    gUp = true;
-  }
+  static int rgb[3] = {0};
+  static int hue = 0;
 
   if (currTime - prevTimeFade >= fadeInterval) {
     prevTimeFade = currTime;
     
-    if (rUp) {
-      r++;
-    } else {
-      r--;
+    if (hue >= 360) {
+      hue = 0;
     }
-    if (gUp) {
-      g++;
-    } else {
-      g--;
-    }
-    if (bUp) {
-      b++;
-    } else {
-      b--;
-    }
-    //Serial.println(g);
-    analogWrite(R, r);
-    analogWrite(G, g);
-    analogWrite(B, b);
+
+    HsvToRgb(hue, 1, 1, rgb);
+    
+    analogWrite(R, 255 - rgb[0]);
+    analogWrite(G, 255 - rgb[1]);
+    analogWrite(B, 255 - rgb[2]);
+
+    hue++;
   }
 
   switchLEDs();
@@ -87,4 +59,55 @@ void switchLEDs() {
         break;
     }
   }
+}
+
+// Input:  0 <= H < 360, 0 <= S/V <= 1
+// Output: 0 <= RGB <= 255
+void HsvToRgb(double hue, double saturation, double value, int* rgb) {
+  double r, g, b;
+
+  constrain(hue, 0, 359);
+  constrain(saturation, 0, 1);
+  constrain(value, 0, 1);
+  
+  double c = value * saturation;
+  double x = c * (1 - fabs(fmod((hue / 60), 2) - 1));
+  double m = value - c;
+
+  switch (int(hue / 60)) {
+    case 0:
+      r = c + m;
+      g = x + m;
+      b = 0;
+      break;
+    case 1:
+      r = x + m;
+      g = c + m;
+      b = 0;
+      break;
+    case 2:
+      r = 0;
+      g = c + m;
+      b = x + m;
+      break;
+    case 3:
+      r = 0;
+      g = x + m;
+      b = c + m;
+      break;
+    case 4:
+      r = x + m;
+      g = 0;
+      b = c + m;
+      break;
+    case 5:
+      r = c + m;
+      g = 0;
+      b = x + m;
+      break;
+  }
+  
+  rgb[0] = int(r * 255);
+  rgb[1] = int(g * 255);
+  rgb[2] = int(b * 255);
 }

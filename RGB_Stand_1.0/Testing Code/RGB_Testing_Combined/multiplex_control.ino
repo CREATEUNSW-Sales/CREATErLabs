@@ -119,57 +119,37 @@ void multiColorTest() {
 }
 
 void multiFadeTest() {
-  static bool r1Up = false;
-  static bool g1Up = true;
-  static bool b1Up = false;
-  static bool r2Up = false;
-  static bool g2Up = true;
-  static bool b2Up = false;
-  static bool r3Up = false;
-  static bool g3Up = true;
-  static bool b3Up = false;
+  static int hue0 = 0;
+  static int hue1 = 120;
+  static int hue2 = 240;
+  static int rgb[3] = {0};
 
-  if (colors[0][0] >= 255) r1Up = false;
-  else if (colors[0][0] <= 0) r1Up = true;
-  if (colors[0][1] >= 255) g1Up = false;
-  else if (colors[0][1] <= 0) g1Up = true;
-  if (colors[0][2] >= 255) b1Up = false;
-  else if (colors[0][2] <= 0) b1Up = true;
+  if (hue0 >= 360) {
+    hue0 = 0;
+  }
+  if (hue1 >= 360) {
+    hue1 = 0;
+  }
+  if (hue2 >= 360) {
+    hue2 = 0;
+  }
 
-  if (colors[1][0] >= 255) r2Up = false;
-  else if (colors[0][0] <= 0) r2Up = true;
-  if (colors[1][1] >= 255) g2Up = false;
-  else if (colors[1][1] <= 0) g2Up = true;
-  if (colors[1][2] >= 255) b1Up = false;
-  else if (colors[1][2] <= 0) b2Up = true;
+  HsvToRgb(hue0, 1, 1, rgb);
+  colors[0][0] = rgb[0];
+  colors[0][1] = rgb[1];
+  colors[0][2] = rgb[2];
+  HsvToRgb(hue1, 1, 1, rgb);
+  colors[1][0] = rgb[0];
+  colors[1][1] = rgb[1];
+  colors[1][2] = rgb[2];
+  HsvToRgb(hue2, 1, 1, rgb);
+  colors[2][0] = rgb[0];
+  colors[2][1] = rgb[1];
+  colors[2][2] = rgb[2];
 
-  if (colors[2][0] >= 255) r3Up = false;
-  else if (colors[2][0] <= 0) r3Up = true;
-  if (colors[2][1] >= 255) g3Up = false;
-  else if (colors[2][1] <= 0) g3Up = true;
-  if (colors[2][2] >= 255) b3Up = false;
-  else if (colors[2][2] <= 0) b3Up = true;
-
-  if (r1Up) colors[0][0]++;
-  else colors[0][0]--;
-  if (g1Up) colors[0][1]++;
-  else colors[0][1]--;
-  if (b1Up) colors[0][2]++;
-  else colors[0][2]--;
-
-  if (r2Up) colors[1][0]++;
-  else colors[1][0]--;
-  if (g2Up) colors[1][1]++;
-  else colors[1][1]--;
-  if (b2Up) colors[1][2]++;
-  else colors[1][2]--;
-
-  if (r3Up) colors[2][0]++;
-  else colors[2][0]--;
-  if (g3Up) colors[2][1]++;
-  else colors[2][1]--;
-  if (b3Up) colors[2][2]++;
-  else colors[2][2]--;
-
+  hue0++;
+  hue1++;
+  hue2++;
+  
   _delay_ms(fadeInterval);
 }

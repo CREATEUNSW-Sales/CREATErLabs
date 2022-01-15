@@ -1,4 +1,5 @@
 #include <EEPROM.h>
+#include <math.h>
 
 #define R 3
 #define G 10
@@ -8,7 +9,7 @@
 #define anode3 11
 #define buttonPin 2
 
-#define fadeInterval 10
+#define fadeInterval 20
 #define switchInterval 1
 
 #define numAnodes 3
@@ -25,6 +26,7 @@ void whiteSolid();
 void orangeSolid();
 
 void fadeTest();
+void HsvToRgb(double hue, double saturation, double value, int* rgb);
 
 void setupCustomTimers();
 void disableCustomTimers();
@@ -62,6 +64,7 @@ void loop() {
     }
 
     prevMode = mode;
+    EEPROM.write(addr, mode);
   }
   
   switch (mode) {
