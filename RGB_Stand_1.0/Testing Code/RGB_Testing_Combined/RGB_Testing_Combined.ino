@@ -8,17 +8,22 @@
 #define anode2 12
 #define anode3 11
 #define buttonPin 2
+#define pot A1
 
 #define fadeInterval 20
-#define switchInterval 1
 
 #define numAnodes 3
 
 int mode;
 int addr = 0;
 
+double brightness = 0.75;
+int rgb[3] = {0};
+
 void serialControl();
 void buttonControl();
+void readPot();
+void printRGB();
 
 void switchLEDs();
 void blueSolid();
@@ -42,7 +47,8 @@ void setup() {
   pinMode(anode1, OUTPUT);
   pinMode(anode2, OUTPUT);
   pinMode(anode3, OUTPUT);
-
+  
+  pinMode(pot, INPUT);
   pinMode(buttonPin, INPUT_PULLUP);
 
   Serial.begin(9600);
@@ -62,7 +68,7 @@ void loop() {
     } else if (mode == 4 || mode == 5) {
       setupCustomTimers();
     }
-
+    //Serial.println(mode);
     prevMode = mode;
     EEPROM.write(addr, mode);
   }
@@ -91,5 +97,6 @@ void loop() {
       break;
   }
 
+  readPot();
   buttonControl();
 }

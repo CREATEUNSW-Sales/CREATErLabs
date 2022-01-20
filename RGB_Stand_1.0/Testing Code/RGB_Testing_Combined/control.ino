@@ -24,3 +24,14 @@ void buttonControl() {
     prevTime = millis();
   }
 }
+
+void readPot() {
+  int sensorVal = analogRead(A1);
+  brightness = map(sensorVal, 0, 1023, 0, 1000) / 1000.0;
+}
+
+void printRGB() {
+  char buff[20];
+  sprintf(buff,"R: %d, G: %d, B: %d",rgb[0],rgb[1],rgb[2]);
+  Serial.println(buff);
+}

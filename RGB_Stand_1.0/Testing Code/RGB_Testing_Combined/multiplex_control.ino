@@ -107,22 +107,25 @@ ISR (TIMER1_OVF_vect) {
 }
 
 void multiColorTest() {
-  colors[0][0] = 0;
-  colors[0][1] = 60;
-  colors[0][2] = 255;
-  colors[1][0] = 255;
-  colors[1][1] = 255;
-  colors[1][2] = 255;
-  colors[2][0] = 255;
-  colors[2][1] = 100;
-  colors[2][2] = 0;
+  HsvToRgb(226, 1, brightness, rgb);
+  colors[0][0] = rgb[0];
+  colors[0][1] = rgb[1];
+  colors[0][2] = rgb[2];
+  HsvToRgb(0, 0, brightness, rgb);
+  colors[1][0] = rgb[0];
+  colors[1][1] = rgb[1];
+  colors[1][2] = rgb[2];
+  HsvToRgb(24, 1, brightness, rgb);
+  colors[2][0] = rgb[0];
+  colors[2][1] = rgb[1];
+  colors[2][2] = rgb[2];
 }
 
 void multiFadeTest() {
   static int hue0 = 0;
   static int hue1 = 120;
   static int hue2 = 240;
-  static int rgb[3] = {0};
+  
 
   if (hue0 >= 360) {
     hue0 = 0;
@@ -134,15 +137,15 @@ void multiFadeTest() {
     hue2 = 0;
   }
 
-  HsvToRgb(hue0, 1, 1, rgb);
+  HsvToRgb(hue0, 1, brightness, rgb);
   colors[0][0] = rgb[0];
   colors[0][1] = rgb[1];
   colors[0][2] = rgb[2];
-  HsvToRgb(hue1, 1, 1, rgb);
+  HsvToRgb(hue1, 1, brightness, rgb);
   colors[1][0] = rgb[0];
   colors[1][1] = rgb[1];
   colors[1][2] = rgb[2];
-  HsvToRgb(hue2, 1, 1, rgb);
+  HsvToRgb(hue2, 1, brightness, rgb);
   colors[2][0] = rgb[0];
   colors[2][1] = rgb[1];
   colors[2][2] = rgb[2];

@@ -1,11 +1,11 @@
 unsigned long currTime;
-unsigned long prevTimeSwitch = 0;
 unsigned long prevTimeFade = 0;
 
 void fadeTest() {
-  static int rgb[3] = {0};
   static int hue = 0;
 
+  currTime = millis();
+  
   if (currTime - prevTimeFade >= fadeInterval) {
     prevTimeFade = currTime;
     
@@ -13,8 +13,7 @@ void fadeTest() {
       hue = 0;
     }
 
-    HsvToRgb(hue, 1, 1, rgb);
-    
+    HsvToRgb(hue, 1, brightness, rgb);
     analogWrite(R, 255 - rgb[0]);
     analogWrite(G, 255 - rgb[1]);
     analogWrite(B, 255 - rgb[2]);
@@ -27,37 +26,31 @@ void fadeTest() {
 
 void switchLEDs() {
   static int currAnode = 1;
+    
+  currAnode++;
+  if (currAnode > numAnodes) {
+    currAnode = 1;
+  }
 
-  currTime = millis();
+  digitalWrite(anode1, LOW);
+  digitalWrite(anode2, LOW);
+  digitalWrite(anode3, LOW);
   
-  if (currTime - prevTimeSwitch >= switchInterval) {
-    prevTimeSwitch = currTime;
-    
-    currAnode++;
-    if (currAnode > numAnodes) {
-      currAnode = 1;
-    }
-
-    digitalWrite(anode1, LOW);
-    digitalWrite(anode2, LOW);
-    digitalWrite(anode3, LOW);
-    
-    switch (currAnode) {
-      case 1:
-        digitalWrite(anode1, HIGH);
-        break;
-      case 2:
-        digitalWrite(anode2, HIGH);
-        break;
-      case 3:
-        digitalWrite(anode3, HIGH);
-        break;
-      default:
-        digitalWrite(anode1, LOW);
-        digitalWrite(anode2, LOW);
-        digitalWrite(anode3, LOW);
-        break;
-    }
+  switch (currAnode) {
+    case 1:
+      digitalWrite(anode1, HIGH);
+      break;
+    case 2:
+      digitalWrite(anode2, HIGH);
+      break;
+    case 3:
+      digitalWrite(anode3, HIGH);
+      break;
+    default:
+      digitalWrite(anode1, LOW);
+      digitalWrite(anode2, LOW);
+      digitalWrite(anode3, LOW);
+      break;
   }
 }
 
@@ -78,31 +71,31 @@ void HsvToRgb(double hue, double saturation, double value, int* rgb) {
     case 0:
       r = c + m;
       g = x + m;
-      b = 0;
+      b = m;
       break;
     case 1:
       r = x + m;
       g = c + m;
-      b = 0;
+      b = m;
       break;
     case 2:
-      r = 0;
+      r = m;
       g = c + m;
       b = x + m;
       break;
     case 3:
-      r = 0;
+      r = m;
       g = x + m;
       b = c + m;
       break;
     case 4:
       r = x + m;
-      g = 0;
+      g = m;
       b = c + m;
       break;
     case 5:
       r = c + m;
-      g = 0;
+      g = m;
       b = x + m;
       break;
   }

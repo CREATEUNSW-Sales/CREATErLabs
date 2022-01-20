@@ -1,23 +1,26 @@
 void blueSolid() {
-  analogWrite(R, 255);
-  analogWrite(G, 195);
-  analogWrite(B, 0);
+  HsvToRgb(226, 1, brightness, rgb);
+  analogWrite(R, 255 - rgb[0]);
+  analogWrite(G, 255 - rgb[1]);
+  analogWrite(B, 255 - rgb[2]);
   
   switchLEDs();
 }
 
 void whiteSolid() {
-  analogWrite(R, 0);
-  analogWrite(G, 0);
-  analogWrite(B, 0);
+  HsvToRgb(0, 0, brightness, rgb);
+  analogWrite(R, 255 - rgb[0]);
+  analogWrite(G, 255 - rgb[1]);
+  analogWrite(B, 255 - rgb[2]);
   
   switchLEDs();
 }
 
 void orangeSolid() {
-  analogWrite(R, 0);
-  analogWrite(G, 145);
-  analogWrite(B, 255);
+  HsvToRgb(24, 1, brightness, rgb);
+  analogWrite(R, 255 - rgb[0]);
+  analogWrite(G, 255 - rgb[1]);
+  analogWrite(B, 255 - rgb[2]);
   
   switchLEDs();
 }
