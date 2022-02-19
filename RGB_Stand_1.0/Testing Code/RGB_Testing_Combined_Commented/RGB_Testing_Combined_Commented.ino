@@ -1,12 +1,28 @@
 /*
-  CREATOR LABS
+  CREATErLabs - RGB Acrylic Stand
+  Github: <link here>
 
-  DESCRIPTION AND FUNCTIONALITY HERE:
 
-  WEBSITE LINKS AND STUFF:
-  https://www.instructables.com/LED-Multiplexing-101-6-and-16-RGB-LEDs-With-Just-a/
-  https://www.arduino.cc/en/Hacking/PinMapping168
-  https://ww1.microchip.com/downloads/en/DeviceDoc/Atmel-7810-Automotive-Microcontrollers-ATmega328P_Datasheet.pdf
+  Lights up 3 common-annode RGB LEDs for use in CREATerLabs' RGB Acrylic Stand.
+  Contains 6 modes that can be cycled through using a button. Mode is written to EEPROM to remember mode after being turned off.
+  Can potentially be controlled using serial monitor and with brightness control using potentiometer.
+
+  Mode 0      Sets all LEDs to solid blue (#003cff)
+  Mode 1      Sets all LEDs to solid white (#ffffff)
+  Mode 2      Sets all LEDs to solid orange (#ff6600)
+  Mode 3      Cycles all LEDs through different hues at full brightness and saturation in HSV
+  Mode 4      Sets the LEDs to different colours (blue, white and orange)
+  Mode 5      Cycles all LEDs through different hues at full brightness and saturation in HSV with different hue offsets
+
+
+  Last Modified:
+  18 Feb 2022
+
+  
+  References:
+  Direct Port Addressing    https://www.instructables.com/LED-Multiplexing-101-6-and-16-RGB-LEDs-With-Just-a/
+  Arduino Pin Mapping       https://www.arduino.cc/en/Hacking/PinMapping168
+  ATmega328P Datasheet      https://ww1.microchip.com/downloads/en/DeviceDoc/Atmel-7810-Automotive-Microcontrollers-ATmega328P_Datasheet.pdf
 */
 
 #include <EEPROM.h>
