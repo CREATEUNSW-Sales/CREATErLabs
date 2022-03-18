@@ -15,14 +15,14 @@ void serialControl() {
 }
 
 // Use button to sequentially switch modes
-void buttonControl() {
+void buttonISR() {
   // Read if button is pressed
-  bool buttonState = digitalRead(BUTTON_PIN);
+  //bool buttonState = digitalRead(BUTTON_PIN);
   static unsigned long prevTime = 0;
   //Serial.println(buttonState);
 
   // If button is pressed (LOW) and not waiting for switch bouncing (200ms since previous detected press)
-  if (buttonState == LOW && millis() - prevTime >= 200) {
+  if (millis() - prevTime >= 200) {
     changeMode(mode + 1);
 
     prevTime = millis();

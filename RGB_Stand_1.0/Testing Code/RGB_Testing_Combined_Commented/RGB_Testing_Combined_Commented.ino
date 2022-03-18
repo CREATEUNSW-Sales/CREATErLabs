@@ -69,7 +69,7 @@ volatile int count = 0;
 // Use serial monitor to send mode commands
 void serialControl();
 // Use button to sequentially switch modes
-void buttonControl();
+void buttonISR();
 void changeMode(int newMode);
 // Read potentiometer and update brightness
 void readPot();
@@ -114,6 +114,10 @@ void setup() {
   pinMode(POT_PIN, INPUT);
   pinMode(BUTTON_PIN, INPUT_PULLUP);
 
+  // Set button to trigger interrupt service routine
+  // Rising trigger - LOW to HIGH (on button release)
+  attachInterrupt(digitalPinToInterrupt(BUTTON_PIN),buttonISR,RISING);
+
   Serial.begin(9600);
 
   // Read previously stored mode from EEPROM (non-volatile memory)
@@ -155,7 +159,6 @@ void loop() {
       break;
   }
 
-  buttonControl();
   //serialControl();
 
   // Check potentiometer to change brightness if required
