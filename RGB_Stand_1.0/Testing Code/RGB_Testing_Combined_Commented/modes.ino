@@ -126,3 +126,12 @@ void multiFade() {
   // Cycle through hue at rate defined by FADE_INTERVAL (ms)
   _delay_ms(FADE_INTERVAL);
 }
+
+
+// Turn all LEDs off
+void off() {
+  // Turn all LEDs off
+  digitalWrite(ANODE_1, LOW);
+  digitalWrite(ANODE_2, LOW);
+  digitalWrite(ANODE_3, LOW);
+}

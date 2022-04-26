@@ -44,7 +44,7 @@
 // Define number of LEDs used
 #define NUM_ANODES 3
 // Define total number of modes
-#define NUM_MODES 6
+#define NUM_MODES 7
 
 // Set true if potentiometer is connected for use as brightness control
 bool BRIGHTNESS_CONTROL = false;
@@ -88,6 +88,8 @@ void fadeAll();
 void multiSolid();
 // Fade all LEDs with different colours
 void multiFade();
+// Off mode
+void off();
 
 //// Helper Functions ////
 // Convert HSV to RGB
@@ -153,6 +155,9 @@ void loop() {
       break;
     case 5:
       multiFade();
+      break;
+    case 6:
+      off();
       break;
     default:
       mode = 0;
