@@ -13,6 +13,7 @@
   Mode 3      Cycles all LEDs through different hues at full brightness and saturation in HSV
   Mode 4      Sets the LEDs to different colours (blue, white and orange)
   Mode 5      Cycles all LEDs through different hues at full brightness and saturation in HSV with different hue offsets
+  Mode 6      Sets all LEDs OFF
 
 
   Last Modified:
