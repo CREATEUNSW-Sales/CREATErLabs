@@ -35,6 +35,18 @@ void orangeSolid() {
   switchLEDs();
 }
 
+// Takes input for which colour to be set
+void solid(double hue, double saturation, double value) {
+  // Convert HSV (226, 1.0, 1.0) to RGB and write to corresponding pins
+  HsvToRgb(hue, saturation, value, rgb);
+  // Need to subtract from 255 as LEDs are reversed due to being common anode
+  analogWrite(R_PIN, 255 - rgb[0]);
+  analogWrite(G_PIN, 255 - rgb[1]);
+  analogWrite(B_PIN, 255 - rgb[2]);
+
+  // Cycle through LEDs
+  switchLEDs();
+}
 
 // Fade all LEDs with the same colours
 void fadeAll() {
@@ -81,6 +93,25 @@ void multiSolid() {
   colours[1][1] = rgb[1];
   colours[1][2] = rgb[2];
   HsvToRgb(24, 1, brightness, rgb);
+  colours[2][0] = rgb[0];
+  colours[2][1] = rgb[1];
+  colours[2][2] = rgb[2];
+}
+
+// Set all LEDs to different colours with input
+void solidMultiple(double colours1[3], double colours2[3], double colours3[3]) {
+  // Convert HSV (226, 1.0, 1.0) to RGB and write to corresponding pins
+  HsvToRgb(colours1[0], colours1[1], colours1[2], rgb);
+  // No need to subtract as timer already setup to account for common anode
+  // Timer1 Overflow ISR handles LED switching for us using defined arrays of colours
+  colours[0][0] = rgb[0];
+  colours[0][1] = rgb[1];
+  colours[0][2] = rgb[2];
+  HsvToRgb(colours2[0], colours2[1], colours2[2], rgb);
+  colours[1][0] = rgb[0];
+  colours[1][1] = rgb[1];
+  colours[1][2] = rgb[2];
+  HsvToRgb(colours3[0], colours3[1], colours3[2], rgb);
   colours[2][0] = rgb[0];
   colours[2][1] = rgb[1];
   colours[2][2] = rgb[2];

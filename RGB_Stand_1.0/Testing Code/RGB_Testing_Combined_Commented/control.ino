@@ -32,9 +32,9 @@ void buttonISR() {
 void changeMode(int newMode) {
   if (mode != newMode) {
     // Use direct port addressing to customise Timer1 and Timer2 for modes 4 and 5
-    if ((mode == 4 || mode == 5) && !(newMode == 4 || newMode == 5)) {
+    if ((mode == 4 || mode == 5 || mode == 8) && !(newMode == 4 || newMode == 5 || newMode == 8)) {
       disableCustomTimers();
-    } else if (newMode == 4 || newMode == 5) {
+    } else if (newMode == 4 || newMode == 5 || newMode == 8) {
       setupCustomTimers();
     }
     //Serial.println(mode);

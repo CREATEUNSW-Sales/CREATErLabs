@@ -45,7 +45,7 @@
 // Define number of LEDs used
 #define NUM_ANODES 3
 // Define total number of modes
-#define NUM_MODES 7
+#define NUM_MODES 9
 
 // Set true if potentiometer is connected for use as brightness control
 bool BRIGHTNESS_CONTROL = false;
@@ -83,10 +83,12 @@ void printRGB();
 void blueSolid();
 void whiteSolid();
 void orangeSolid();
+void solid(double hue, double saturation, double value);
 // Fade all LEDs with the same colours
 void fadeAll();
 // Set all LEDs to different colours
 void multiSolid();
+void solidMultiple(double colours1[3], double colours2[3], double colours3[3]);
 // Fade all LEDs with different colours
 void multiFade();
 // Off mode
@@ -127,7 +129,7 @@ void setup() {
   mode = EEPROM.read(addr);
 
   // Use direct port addressing to customise Timer1 and Timer2 for modes 4 and 5
-  if (mode == 4 || mode == 5) {
+  if (mode == 4 || mode == 5 || mode == 8) {
     setupCustomTimers();
   }
 }
@@ -159,6 +161,15 @@ void loop() {
       break;
     case 6:
       off();
+      break;
+    case 7:
+      solid(279, 0.92, 0.87);
+      break;
+    case 8:
+      double colours1[] = {279, 0.92, 0.87};
+      double colours2[] = {333, 0.86, 0.93};
+      double colours3[] = {91, 1, 1};
+      solidMultiple(colours1, colours2, colours3);
       break;
     default:
       mode = 0;
